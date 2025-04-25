@@ -20,4 +20,42 @@ def main(page:ft.page) -> None:
             button_submit.disabled = False
         else:
             button_submit.disabled = True
-            
+        page.update()
+
+    def submit(e: ControlEvent) -> None:
+        print("Username:", text_username.value)
+        print("Password:", text_password.value)
+
+        page.clean()
+        page.add(
+            Row(
+                controls=[Text(value=f"Welcome: {text_username.value}", size=20)],
+                alignment=ft.MainAxisAlignment.CENTER
+            )
+        )
+
+    checkbox_signup.on_change = validate
+    text_username.on_change = validate
+    text_password.on_change = validate
+    button_submit.on_click = submit
+
+    page.add(
+        Row(
+            controls=[
+                Column(
+                    controls=[
+                        text_username,
+                        text_password,
+                        checkbox_signup,
+                        button_submit
+                    ],
+                    alignment=ft.MainAxisAlignment.CENTER
+                )
+            ],
+            alignment=ft.MainAxisAlignment.CENTER
+        )
+    )
+
+
+if __name__ == "__main__":
+    ft.app(target=main)      
